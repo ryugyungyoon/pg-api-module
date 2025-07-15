@@ -1,0 +1,64 @@
+************************************************
+PayMethod     : null
+MID           : null
+MallUserID    : null
+Amt           : null
+name          : null
+GoodsName     : null
+TID           : null
+MOID          : null
+AuthDate      : null
+ResultCode    : null
+ResultMsg     : null
+VbankNum      : null
+FnCd          : null
+VbankName     : null
+VbankInputName : null
+RcptTID       : null
+RcptType      : null
+RcptAuthCode  : null
+CancelDate    : null
+************************************************
+************************************************
+PayMethod     : null
+MID           : null
+MallUserID    : null
+Amt           : null
+name          : null
+GoodsName     : null
+TID           : null
+MOID          : null
+AuthDate      : null
+ResultCode    : null
+ResultMsg     : null
+VbankNum      : null
+FnCd          : null
+VbankName     : null
+VbankInputName : null
+RcptTID       : null
+RcptType      : null
+RcptAuthCode  : null
+CancelDate    : null
+************************************************
+************************************************
+PayMethod     : null
+PayMethod2     : null
+MID           : null
+MallUserID    : null
+Amt           : null
+name          : null
+GoodsName     : null
+TID           : null
+MOID          : null
+AuthDate      : null
+ResultCode    : null
+ResultMsg     : null
+VbankNum      : null
+FnCd          : null
+VbankName     : null
+VbankInputName : null
+RcptTID       : null
+RcptType      : null
+RcptAuthCode  : null
+CancelDate    : null
+************************************************

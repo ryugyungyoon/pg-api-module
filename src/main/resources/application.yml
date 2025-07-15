@@ -1,0 +1,16 @@
+###############################
+# server setting
+###############################
+server:
+  port: 28080
+
+spring:
+  thymeleaf:
+    prefix: classpath:templates/
+    suffix: .html
+    cache: false
+    view-names: thymeleaf/*
+  mvc:
+    view:
+      prefix: /WEB-INF/views/
+      suffix: .jsp
