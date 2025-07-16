@@ -1,4 +1,4 @@
-package com.rc.exapi.request;
+package com.rc.pgapimodule.request;
 
 import lombok.Data;
 

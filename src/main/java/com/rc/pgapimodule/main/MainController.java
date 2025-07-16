@@ -1,6 +1,6 @@
-package com.rc.exapi.main;
+package com.rc.pgapimodule.main;
 
-import com.rc.exapi.request.PayNotiRequstDto;
+import com.rc.pgapimodule.request.PayNotiRequstDto;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;

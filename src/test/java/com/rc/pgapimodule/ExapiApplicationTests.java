@@ -1,4 +1,4 @@
-package com.rc.exapi;
+package com.rc.pgapimodule;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

@@ -14,3 +14,27 @@ spring:
     view:
       prefix: /WEB-INF/views/
       suffix: .jsp
+
+pg:
+  default: KG_MOBILIANS
+  kgmobilians:
+    merchant-id: test_merchant
+    api-key: test_apikey
+    payment-url: https://kgmobilians.example.com/pay
+  paywill:
+    client-id: pw_client
+    client-secret: pw_secret
+    payment-url: https://paywill.example.com/pay
+
+###############################
+# profiles environment setting
+###############################
+--- #local
+spring:
+  config:
+    activate:
+      on-profile: local
+
+pg:
+  default: MOCK
+
