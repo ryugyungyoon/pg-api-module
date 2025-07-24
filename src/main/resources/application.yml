@@ -5,6 +5,10 @@ server:
   port: 28080
 
 spring:
+  # profiles
+  profiles:
+    default: local
+  # html view 사용
   thymeleaf:
     prefix: classpath:templates/
     suffix: .html
@@ -17,14 +21,27 @@ spring:
 
 pg:
   default: KG_MOBILIANS
-  kgmobilians:
+  kg-mobilians:
     merchant-id: test_merchant
     api-key: test_apikey
-    payment-url: https://kgmobilians.example.com/pay
-  paywill:
+    payment-url: https://test.mobilians.co.kr/MUP/api/registration
+  pay-will:
     client-id: pw_client
     client-secret: pw_secret
     payment-url: https://paywill.example.com/pay
+  http:
+    hostname: http://localhost:28080
+    common:
+      auth:
+        header:
+          apikey:
+            name: secretKey
+          transaction:
+            name: trstNo
+      timeout: 5
+      retry:
+        count: 5
+
 
 ###############################
 # profiles environment setting
@@ -37,4 +54,30 @@ spring:
 
 pg:
   default: MOCK
+  http:
+    kg-mobilians:
+      url: https://test.mobilians.co.kr
 
+
+--- #dev
+spring:
+  config:
+    activate:
+      on-profile: dev
+
+pg:
+  http:
+    kg-mobilians:
+      url: https://test.mobilians.co.kr
+
+
+--- #prod
+spring:
+  config:
+    activate:
+      on-profile: prod
+
+pg:
+  http:
+    kg-mobilians:
+      url: https://mup.mobilians.co.k

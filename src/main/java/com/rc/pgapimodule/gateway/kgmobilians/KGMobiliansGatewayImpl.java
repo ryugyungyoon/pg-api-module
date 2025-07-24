@@ -11,13 +11,13 @@ import org.springframework.stereotype.Component;
 @Component
 public class KGMobiliansGatewayImpl implements PaymentGateway {
 
-	private final PGProperties.KGMobiliansProperties props;
+	private final PGProperties props;
 	private final KGMobiliansApiClient apiClient;
 
 	@Override
 	public PGPaymentResponse requestPayment(PGPaymentRequest request) {
 		try {
-			return apiClient.callPaymentApi(request);
+			return apiClient.callPaymentApi2(request);
 		} catch (Exception e) {
 			throw new PGException("KG001", "결제 요청 실패", e.getMessage());
 		}

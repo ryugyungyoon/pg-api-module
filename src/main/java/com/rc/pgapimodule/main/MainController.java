@@ -13,7 +13,7 @@ public class MainController {
     /**
      * [타임리프 페이지 예시]
      *
-     * @author KyungYoon
+     * @author ryuky
      */
     @GetMapping("/thy")
     public String mainThyForm(){
@@ -23,7 +23,7 @@ public class MainController {
     /**
      * [jsp 결제 페이지]
      *
-     * @author KyungYoon
+     * @author ryuky
      */
     @GetMapping("/payRequest")
     public String payRequestForm(){
@@ -33,7 +33,7 @@ public class MainController {
     /**
      * [jsp 결제 페이지]
      *
-     * @author KyungYoon
+     * @author ryuky
      */
     @GetMapping("/payRequest-utf")
     public String payRequestUtfForm(){
@@ -43,7 +43,7 @@ public class MainController {
     /**
      * [jsp 결제 결과 페이지]
      *
-     * @author KyungYoon
+     * @author ryuky
      */
     @PostMapping("/payResult-utf")
     public String payResultUtfForm(){
@@ -53,7 +53,7 @@ public class MainController {
     /**
      * [jsp 결제 취소 페이지]
      *
-     * @author KyungYoon
+     * @author ryuky
      */
     @GetMapping("/cancelRequest-utf")
     public String cancelRequestUtfForm(){
@@ -63,7 +63,7 @@ public class MainController {
     /**
      * [jsp 결제 취소 결과 페이지]
      *
-     * @author KyungYoon
+     * @author ryuky
      */
     @PostMapping("/cancelResult-utf")
     public String payResultfForm(){
@@ -73,7 +73,7 @@ public class MainController {
     /**
      * [jsp 결제 조회 페이지] 인증값이 안맞음
      *
-     * @author KyungYoon
+     * @author ryuky
      */
     @GetMapping("/paySearch")
     public String paySearchForm(){
@@ -83,7 +83,7 @@ public class MainController {
     /**
      * [jsp 결제 통보 페이지]
      *
-     * @author KyungYoon
+     * @author ryuky
      */
     @GetMapping("/payNoti-get")
     public String getPayNotiForm(Model model,@ModelAttribute PayNotiRequstDto payNotiRequstDto){
@@ -94,7 +94,7 @@ public class MainController {
     /**
      * [jsp 결제 통보 페이지]
      *
-     * @author KyungYoon
+     * @author ryuky
      */
     @PostMapping("/payNoti-post")
     public String postPayNotiForm(){
@@ -104,7 +104,7 @@ public class MainController {
     /**
      * [영수증 페이지]
      *
-     * @author KyungYoon
+     * @author ryuky
      */
     @GetMapping("/receipt")
     public String redirectReceipt(){

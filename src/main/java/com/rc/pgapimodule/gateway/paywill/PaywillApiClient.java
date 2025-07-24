@@ -11,17 +11,17 @@ import org.springframework.web.client.RestTemplate;
 @RequiredArgsConstructor
 public class PaywillApiClient {
 
-	private final PGProperties.PaywillProperties props;
+	private final PGProperties props;
     private final RestTemplate restTemplate;
 
     public PGPaymentResponse callPaymentApi(PGPaymentRequest req) {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.setBasicAuth(props.getClientId(), props.getClientSecret());
+        headers.setBasicAuth(props.getPaywill().getClientId(), props.getPaywill().getClientSecret());
 
         HttpEntity<PGPaymentRequest> entity = new HttpEntity<>(req, headers);
         ResponseEntity<PGPaymentResponse> response = restTemplate.exchange(
-            props.getPaymentUrl(), HttpMethod.POST, entity, PGPaymentResponse.class);
+            props.getPaywill().getPaymentUrl(), HttpMethod.POST, entity, PGPaymentResponse.class);
 
         return response.getBody();
     }

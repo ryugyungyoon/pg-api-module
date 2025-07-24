@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class PaywillGatewayImpl implements PaymentGateway {
 
-	private final PGProperties.PaywillProperties props;
+	private final PGProperties props;
 	private final PaywillApiClient apiClient;
 
 	@Override
