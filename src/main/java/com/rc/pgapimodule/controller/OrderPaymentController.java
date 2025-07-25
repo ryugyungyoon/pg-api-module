@@ -1,6 +1,9 @@
 package com.rc.pgapimodule.controller;
 
-import com.rc.pgapimodule.dto.*;
+import com.rc.pgapimodule.dto.request.PGApprovalRequest;
+import com.rc.pgapimodule.dto.request.PGCancelRequest;
+import com.rc.pgapimodule.dto.request.PGPaymentRequest;
+import com.rc.pgapimodule.dto.response.*;
 import com.rc.pgapimodule.gateway.PGType;
 import com.rc.pgapimodule.service.OrderPaymentService;
 import io.swagger.v3.oas.annotations.Operation;

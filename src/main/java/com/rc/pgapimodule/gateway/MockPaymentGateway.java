@@ -1,7 +1,13 @@
 package com.rc.pgapimodule.gateway;
 
-import com.rc.pgapimodule.code.PGStatusCode;
-import com.rc.pgapimodule.dto.*;
+import com.rc.pgapimodule.core.code.PGStatusCode;
+import com.rc.pgapimodule.dto.request.PGApprovalRequest;
+import com.rc.pgapimodule.dto.request.PGCancelRequest;
+import com.rc.pgapimodule.dto.request.PGPaymentRequest;
+import com.rc.pgapimodule.dto.response.PGApprovalResponse;
+import com.rc.pgapimodule.dto.response.PGCancelResponse;
+import com.rc.pgapimodule.dto.response.PGPaymentResponse;
+import com.rc.pgapimodule.dto.response.PGStatusResponse;
 import org.springframework.stereotype.Component;
 
 @Component

@@ -1,6 +1,12 @@
 package com.rc.pgapimodule.service;
 
-import com.rc.pgapimodule.dto.*;
+import com.rc.pgapimodule.dto.request.PGApprovalRequest;
+import com.rc.pgapimodule.dto.request.PGCancelRequest;
+import com.rc.pgapimodule.dto.request.PGPaymentRequest;
+import com.rc.pgapimodule.dto.response.PGApprovalResponse;
+import com.rc.pgapimodule.dto.response.PGCancelResponse;
+import com.rc.pgapimodule.dto.response.PGPaymentResponse;
+import com.rc.pgapimodule.dto.response.PGStatusResponse;
 import com.rc.pgapimodule.gateway.PGType;
 import com.rc.pgapimodule.gateway.PaymentGateway;
 import com.rc.pgapimodule.gateway.PaymentGatewayFactory;
