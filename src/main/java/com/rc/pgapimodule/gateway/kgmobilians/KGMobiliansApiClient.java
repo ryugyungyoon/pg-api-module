@@ -34,25 +34,15 @@ import java.time.Duration;
 @RequiredArgsConstructor
 public class KGMobiliansApiClient {
 	private final PGProperties props;
-	private final RestTemplate restTemplate;
 	private final WebClientConfig webClient;
 	private final ObjectMapper objectMapper;
 
-	//개인정보 제공동의 전문 로그
-	private final Logger privacyTransLogger = LoggerFactory.getLogger("privacyTransLogger");
+	//KG PG 전문 로그
+	private final Logger KgPGTransLogger = LoggerFactory.getLogger("KgPGTransLogger");
 
 	public PGPaymentResponse callPaymentApi(PGPaymentRequest reqDTO) throws JsonProcessingException {
-		/*HttpHeaders headers = new HttpHeaders();
-		headers.setContentType(MediaType.APPLICATION_JSON);
-		headers.set("X-Api-Key", props.getKgmobilians().getApiKey());
-
-		HttpEntity<PGPaymentRequest> entity = new HttpEntity<>(reqDTO, headers);
-		ResponseEntity<PGPaymentResponse> response = restTemplate.exchange(
-			props.getKgmobilians().getPaymentUrl(), HttpMethod.POST, entity, PGPaymentResponse.class);*/
-
-//##########################################################
 		//Logging
-		privacyTransLogger.info("#{}::RECV[TOBIS->KG:{}]::{}"
+		KgPGTransLogger.info("#{}::RECV[TOBIS->KG:{}]::{}"
 				, "KG-mobilians"
 				, reqDTO);
 		log.info("##### PGPaymentRequest : {}", reqDTO);
@@ -80,12 +70,10 @@ public class KGMobiliansApiClient {
 			log.info("##### PGApprovalResponse : {}", result);
 		}
 
-		//return result.getBody();
-
 		// return VO
 		try {
 			//Logging
-			privacyTransLogger.info("#{}::RECV[TOBIS->KG:{}]::PGPaymentResponse({})"
+			KgPGTransLogger.info("#{}::RECV[TOBIS->KG:{}]::PGPaymentResponse({})"
 					, ConstantCode.PAYMENTGATEWAY_CD_KG
 					, CommonUtils.nvl(result, "").toString()
 							.replace("{", "")
@@ -96,18 +84,6 @@ public class KGMobiliansApiClient {
 		catch (JSONException e) {
 			throw new BusinessException("가입설계동의 URL 정보 변환 오류.", ExceptionCode.EXCEPTION_PROC_TRANS_DATA);
 		}
-	}
-
-	public PGPaymentResponse callPaymentApi2(PGPaymentRequest reqDTO) {
-		HttpHeaders headers = new HttpHeaders();
-		headers.setContentType(MediaType.APPLICATION_JSON);
-		headers.set("X-Api-Key", props.getKgmobilians().getApiKey());
-
-		HttpEntity<PGPaymentRequest> entity = new HttpEntity<>(reqDTO, headers);
-		ResponseEntity<PGPaymentResponse> response = restTemplate.exchange(
-			props.getKgmobilians().getPaymentUrl(), HttpMethod.POST, entity, PGPaymentResponse.class);
-
-		return response.getBody();
 	}
 
 	public PGApprovalResponse callApprovalApi(PGApprovalRequest req) {

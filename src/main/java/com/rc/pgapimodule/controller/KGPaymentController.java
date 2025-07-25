@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @RequestMapping("/kg/payment")
 @Controller
-public class KgPaymentController extends BaseController {
+public class KGPaymentController extends BaseController {
 
 
 	/**

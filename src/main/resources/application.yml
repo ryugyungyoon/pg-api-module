@@ -24,11 +24,9 @@ pg:
   kg-mobilians:
     merchant-id: test_merchant
     api-key: test_apikey
-    payment-url: https://test.mobilians.co.kr/MUP/api/registration
-  pay-will:
+  paywill:
     client-id: pw_client
     client-secret: pw_secret
-    payment-url: https://paywill.example.com/pay
   http:
     hostname: http://localhost:28080
     common:
@@ -54,9 +52,10 @@ spring:
 
 pg:
   default: MOCK
-  http:
-    kg-mobilians:
-      url: https://test.mobilians.co.kr
+  kg-mobilians:
+    payment-url: https://test.mobilians.co.kr
+  paywill:
+    payment-url: https://paywill.example.com/pay
 
 
 --- #dev
@@ -66,9 +65,10 @@ spring:
       on-profile: dev
 
 pg:
-  http:
-    kg-mobilians:
-      url: https://test.mobilians.co.kr
+  kg-mobilians:
+    payment-url: https://test.mobilians.co.kr
+  paywill:
+    payment-url: https://paywill.example.com/pay
 
 
 --- #prod
@@ -78,6 +78,7 @@ spring:
       on-profile: prod
 
 pg:
-  http:
-    kg-mobilians:
-      url: https://mup.mobilians.co.k
+  kg-mobilians:
+    payment-url: https://mup.mobilians.co.k
+  paywill:
+    payment-url: https://paywill.example.com/pay

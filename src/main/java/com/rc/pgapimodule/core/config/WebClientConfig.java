@@ -6,6 +6,7 @@ import io.netty.handler.timeout.ReadTimeoutHandler;
 import io.netty.handler.timeout.WriteTimeoutHandler;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpHeaders;
@@ -21,6 +22,7 @@ import java.util.concurrent.TimeUnit;
 
 @Getter
 @Configuration
+@EnableConfigurationProperties(PGProperties.class)
 public class WebClientConfig {
 
 	//KG API 요청 url
@@ -53,6 +55,20 @@ public class WebClientConfig {
 
 	@Bean(name = "kgWebClient")
 	public WebClient getKgClient() {
+		return WebClient.builder()
+				.baseUrl(kgUrl)
+				.clientConnector(this.defaultReactorClientHttpConnector())
+				.defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+				.filter(
+						(req, next) -> next.exchange(
+								ClientRequest.from(req).header("from", "webclient_by_bbins").build()
+						)
+				)
+				.build();
+	}
+
+	@Bean(name = "kgWebClient")
+	public WebClient getPayClient() {
 		return WebClient.builder()
 				.baseUrl(kgUrl)
 				.clientConnector(this.defaultReactorClientHttpConnector())

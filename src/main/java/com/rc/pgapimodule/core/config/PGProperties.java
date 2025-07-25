@@ -8,7 +8,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 public class PGProperties {
 	private String defaultPg;
 
-	private KGMobiliansProperties kgmobilians = new KGMobiliansProperties();
+	private KGMobiliansProperties kgMobilians = new KGMobiliansProperties();
 	private PaywillProperties paywill = new PaywillProperties();
 
 	@Data

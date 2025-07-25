@@ -23,7 +23,7 @@ public class KGMobiliansGatewayImpl implements PaymentGateway {
 	@Override
 	public PGPaymentResponse requestPayment(PGPaymentRequest request) {
 		try {
-			return apiClient.callPaymentApi2(request);
+			return apiClient.callPaymentApi(request);
 		} catch (Exception e) {
 			throw new PGException("KG001", "결제 요청 실패", e.getMessage());
 		}
