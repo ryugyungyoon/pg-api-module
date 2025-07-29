@@ -3,18 +3,21 @@ package com.rc.pgapimodule.gateway;
 import com.rc.pgapimodule.core.code.PGStatusCode;
 import com.rc.pgapimodule.dto.request.PGApprovalRequest;
 import com.rc.pgapimodule.dto.request.PGCancelRequest;
+import com.rc.pgapimodule.dto.request.PGPaymentCashRequest;
 import com.rc.pgapimodule.dto.request.PGPaymentRequest;
-import com.rc.pgapimodule.dto.response.PGApprovalResponse;
-import com.rc.pgapimodule.dto.response.PGCancelResponse;
-import com.rc.pgapimodule.dto.response.PGPaymentResponse;
-import com.rc.pgapimodule.dto.response.PGStatusResponse;
+import com.rc.pgapimodule.dto.response.*;
 import org.springframework.stereotype.Component;
 
 @Component
 public class MockPaymentGateway implements PaymentGateway {
 	@Override
 	public PGPaymentResponse requestPayment(PGPaymentRequest request) {
-		return new PGPaymentResponse(true, "MOCK-TX-0001", "https://mock-payment/redirect", "테스트 결제");
+		return new PGPaymentResponse("0000", "정상처리", "000730010001", "20190619160850826790", "https://mup.mobilians.co.kr/MUP/api/payment.mcash?tid=1233523523523", "https://mup.mobilians.co.kr/MUP/api/qr-code.mcash?tid=1233523523523", "I3qi5h256KJKTbbKAlC9pXFiVaAgb/E2ci6ZgkjzVsg=", "20190401090010");
+	}
+
+	@Override
+	public PGPaymentCashResponse requestPaymentCash(PGPaymentCashRequest request) {
+		return new PGPaymentCashResponse(true, "https://mock-payment/redirect");
 	}
 
 	@Override

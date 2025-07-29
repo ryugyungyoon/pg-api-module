@@ -16,15 +16,40 @@
     })
     function kgPgStart(){
       let listData = {
-          'pgType': 'KG_MOBILIANS',
-          'orderId': 'test01',
-          'amount': '1',
-          'productName': '프론트 커버',
-          'buyerName' : '류경윤',
-          'buyerEmail' : 'alslehs@gmail.com'
+        'pgType': 'KG_MOBILIANS',
+        'sid': '000730010001',
+        'cash_code': 'CN',
+        'product_name': '프론트커버',
+        'trade_id': 'TEST123123',
+        'logo_yn': 'N',
+        'amount.total': 1000,
+        'amount.tax': 0,
+        'amount.tax_free': 0,
+        'amount.supply_value': 0,
+        'integrated_pay': 'N',
+        'divide_payment': 'N',
+        'divide_payment_list[0].sid': 000730010001,
+        'divide_payment_list[0].price': 300,
+        'divide_payment_list[1].sid': 000730010002,
+        'divide_payment_list[1].price': 500,
+        'divide_payment_list[2].sid': 000730010001,
+        'divide_payment_list[2].price': 200,
+        'site_url': 'NAV',
+        'ok_url': 'NAV',
+        'PGPaymentOptionsDto.ep_code': 'NAV'
       };
 
       cfn_ajaxRequest('/api/payment/request', 'POST', listData, 'payment-kg');
+    }
+
+    function kgPgCashStart(){
+      let listData = {
+          'pgType': 'KG_MOBILIANS',
+          'tid': '240328144666',
+          'cash_code': 'CN'
+      };
+
+      cfn_ajaxRequest('/api/payment/request/cash', 'POST', listData, 'payment-kg-cash');
     }
 
     function cfn_ajaxRequest(url, method, data, callbackId){
@@ -50,15 +75,28 @@
   function fn_callback(callbackId, resData) {
     //결제창 정보 조회
     if(callbackId === 'payment-kg'){
+      console.log(resData);
+      let payUrl =  resData.data.pay_url;
+      $('#kgPaymentFrame').attr('src', payUrl).show();
+    }
+    else if(callbackId === 'payment-kg-cash'){
       console.log('성공');
     }
   }
+
+  function payClose() {
+    $('#kgPaymentFrame').hide();
+    }
   </script>
 </head>
 <body>
-  <form>
-
-  </form>
-  <a href="#" class="btn_blue" onClick="kgPgStart();">요 청</a>
+  <div>
+    <a href="#" class="btn_blue" onClick="kgPgStart();">결제 요청</a>
+  </div>
+  <div>
+    <a href="#" class="btn_blue" onClick="kgPgCashStart();">결제창 호출</a>
+  </div>
+  <iframe id="kgPaymentFrame" style="display: none; width: 100%; height: 600px; border: none;">
+  </iframe>
 </body>
 </html>

@@ -7,13 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class PGPaymentResponse {
-	private String code;
-	private String message;
-	private String sid;
-	private String tid;
+public class PGPaymentCashResponse {
+	private boolean success;
 	private String pay_url;
-	private String qrcode_url;
-	private String hmac;
-	private String time_stamp;
 }

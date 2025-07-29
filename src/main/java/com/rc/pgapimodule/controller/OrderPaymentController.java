@@ -2,6 +2,7 @@ package com.rc.pgapimodule.controller;
 
 import com.rc.pgapimodule.dto.request.PGApprovalRequest;
 import com.rc.pgapimodule.dto.request.PGCancelRequest;
+import com.rc.pgapimodule.dto.request.PGPaymentCashRequest;
 import com.rc.pgapimodule.dto.request.PGPaymentRequest;
 import com.rc.pgapimodule.dto.response.*;
 import com.rc.pgapimodule.gateway.PGType;
@@ -25,6 +26,15 @@ public class OrderPaymentController {
 			@RequestParam PGType pgType,
 			PGPaymentRequest request) {
 		PGPaymentResponse result = paymentService.processPayment(pgType, request);
+		return CommonResponse.ok(result);
+	}
+	
+	@PostMapping("/request/cash")
+	@Operation(summary = "결제창 호출")
+	public CommonResponse<PGPaymentCashResponse> requestPayment(
+			@RequestParam PGType pgType,
+			PGPaymentCashRequest request) {
+		PGPaymentCashResponse result = paymentService.processPaymentCash(pgType, request);
 		return CommonResponse.ok(result);
 	}
 

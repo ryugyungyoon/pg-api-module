@@ -5,6 +5,8 @@ import io.netty.handler.ssl.SslContextBuilder;
 import io.netty.handler.timeout.ReadTimeoutHandler;
 import io.netty.handler.timeout.WriteTimeoutHandler;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -21,13 +23,12 @@ import java.time.Duration;
 import java.util.concurrent.TimeUnit;
 
 @Getter
+@RequiredArgsConstructor
 @Configuration
 @EnableConfigurationProperties(PGProperties.class)
 public class WebClientConfig {
 
-	//KG API 요청 url
-	@Value("${pg.http.kg-mobilians.url}")
-	private String kgUrl;
+	private final PGProperties props;
 
 	//TimeOut
 	@Value("${pg.http.common.timeout}")
@@ -54,9 +55,11 @@ public class WebClientConfig {
 	}
 
 	@Bean(name = "kgWebClient")
+	@Qualifier("kgWebClient")
 	public WebClient getKgClient() {
+		String baseUrl = props.getKgMobilians().getPaymentUrl();
 		return WebClient.builder()
-				.baseUrl(kgUrl)
+				.baseUrl(baseUrl)
 				.clientConnector(this.defaultReactorClientHttpConnector())
 				.defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
 				.filter(
@@ -67,10 +70,12 @@ public class WebClientConfig {
 				.build();
 	}
 
-	@Bean(name = "kgWebClient")
+	@Bean(name = "payWebClient")
+	@Qualifier("payWebClient")
 	public WebClient getPayClient() {
+		String baseUrl = props.getPaywill().getPaymentUrl();
 		return WebClient.builder()
-				.baseUrl(kgUrl)
+				.baseUrl(baseUrl)
 				.clientConnector(this.defaultReactorClientHttpConnector())
 				.defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
 				.filter(

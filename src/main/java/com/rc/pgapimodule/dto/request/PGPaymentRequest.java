@@ -4,14 +4,22 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class PGPaymentRequest {
-	private String orderId;
-	private int amount;
-	private String productName;
-	private String buyerName;
-	private String buyerEmail;
-	private String returnUrl;
+	private String sid;
+	private String cash_code;
+	private String product_name;
+	private String trade_id;
+	private String logo_yn;
+	private PGPaymentAmountDto amount;
+	private String integrated_pay;
+	private String divide_payment;
+	private List<PGPaymentDivideDto> divide_payment_list;
+	private String site_url;
+	private String ok_url;
+	private PGPaymentOptionsDto pay_options;
 }

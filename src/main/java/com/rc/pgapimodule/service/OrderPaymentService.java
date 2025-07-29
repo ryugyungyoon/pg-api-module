@@ -2,11 +2,9 @@ package com.rc.pgapimodule.service;
 
 import com.rc.pgapimodule.dto.request.PGApprovalRequest;
 import com.rc.pgapimodule.dto.request.PGCancelRequest;
+import com.rc.pgapimodule.dto.request.PGPaymentCashRequest;
 import com.rc.pgapimodule.dto.request.PGPaymentRequest;
-import com.rc.pgapimodule.dto.response.PGApprovalResponse;
-import com.rc.pgapimodule.dto.response.PGCancelResponse;
-import com.rc.pgapimodule.dto.response.PGPaymentResponse;
-import com.rc.pgapimodule.dto.response.PGStatusResponse;
+import com.rc.pgapimodule.dto.response.*;
 import com.rc.pgapimodule.gateway.PGType;
 import com.rc.pgapimodule.gateway.PaymentGateway;
 import com.rc.pgapimodule.gateway.PaymentGatewayFactory;
@@ -22,6 +20,11 @@ public class OrderPaymentService {
 	public PGPaymentResponse processPayment(PGType type, PGPaymentRequest request) {
 		PaymentGateway gateway = gatewayFactory.getGateway(type);
 		return gateway.requestPayment(request);
+	}
+
+	public PGPaymentCashResponse processPaymentCash(PGType type, PGPaymentCashRequest request) {
+		PaymentGateway gateway = gatewayFactory.getGateway(type);
+		return gateway.requestPaymentCash(request);
 	}
 
 	public PGApprovalResponse confirm(PGType type, PGApprovalRequest request) {
