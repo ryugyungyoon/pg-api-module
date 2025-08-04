@@ -7,12 +7,10 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class PGCancelResponse {
+public class PGPaymentPurchaseResponse {
 	private String code;
 	private String message;
-	private String sid;
-	private String cash_code;
+	private String sign_date;
+	private String trade_id;
 	private String pay_token;
-	private String amount;
-	private String refund_amount;
 }

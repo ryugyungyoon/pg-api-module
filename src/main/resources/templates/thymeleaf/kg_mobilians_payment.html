@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Title</title>
+  <title>KG PG 결제</title>
   <style>
     html,body {height: 100%;}
     form {overflow: hidden;}
@@ -17,26 +17,16 @@
     function kgPgStart(){
       let listData = {
         'pgType': 'KG_MOBILIANS',
-        'sid': '000730010001',
+        'sid': '240328144666',
         'cash_code': 'CN',
         'product_name': '프론트커버',
-        'trade_id': 'TEST123123',
-        'logo_yn': 'N',
+        'trade_id': 'TEST1231239',
         'amount.total': 1000,
-        'amount.tax': 0,
-        'amount.tax_free': 0,
-        'amount.supply_value': 0,
-        'integrated_pay': 'N',
-        'divide_payment': 'N',
-        'divide_payment_list[0].sid': 000730010001,
-        'divide_payment_list[0].price': 300,
-        'divide_payment_list[1].sid': 000730010002,
-        'divide_payment_list[1].price': 500,
-        'divide_payment_list[2].sid': 000730010001,
-        'divide_payment_list[2].price': 200,
         'site_url': 'NAV',
-        'ok_url': 'NAV',
-        'PGPaymentOptionsDto.ep_code': 'NAV'
+        'ok_url': 'http://localhost:28080/kg/payment/success',
+        'call_type': 'P',
+        'close_url': 'http://localhost:28080/kg/payment/cancel-close',
+        'fail_url': 'http://localhost:28080/kg/payment/fail'
       };
 
       cfn_ajaxRequest('/api/payment/request', 'POST', listData, 'payment-kg');
@@ -51,6 +41,58 @@
 
       cfn_ajaxRequest('/api/payment/request/cash', 'POST', listData, 'payment-kg-cash');
     }
+
+    function kgPgPurchase(){
+     let listData = {
+       'pgType': 'KG_MOBILIANS',
+       'sid': '240328144666',
+       'trade_id': 'TEST1231237',
+       'cash_code': 'CN',
+       'pay_token': '250731000249610'
+     };
+
+     cfn_ajaxRequest('/api/payment/purchase', 'POST', listData, 'payment-kg');
+   }
+
+    function kgPgCancel(){
+         let listData = {
+           'pgType': 'KG_MOBILIANS',
+           'sid': '240328144666',
+           'trade_id': 'TEST1231239',
+           'cash_code': 'CN',
+           'pay_token': '250731000249745',
+           'amount': '1000',
+           'cancel_type': 'C',
+           'part_cancel': 'N',
+           'cn_tax_ver': 'CPLX'
+         };
+
+         cfn_ajaxRequest('/api/payment/cancel', 'POST', listData, 'payment-kg');
+       }
+
+    function kgPgRefund(){
+       let listData = {
+         'pgType': 'KG_MOBILIANS',
+         'sid': '240328144666',
+         'trade_id': 'TEST1231239',
+         'cash_code': 'RA',
+         'pay_token': '250731000249745',
+         'amount': '1000',
+         'cancel_type': 'R',
+         'part_cancel': 'N',
+         'bank_code': '004',
+         'account_no': '498102-01-287924',
+         'account_name': '류경윤',
+         'refund_amount': '1000'
+       };
+
+       cfn_ajaxRequest('/api/payment/cancel', 'POST', listData, 'payment-kg');
+     }
+
+    function fnPayClose(){
+      $('#kgPaymentFrame').hide().attr('src', '');
+       alert('사용자가 결제를 취소했습니다.');
+    };
 
     function cfn_ajaxRequest(url, method, data, callbackId){
     	let callback = url.split('/').reverse()[0];
@@ -84,9 +126,26 @@
     }
   }
 
-  function payClose() {
-    $('#kgPaymentFrame').hide();
+  $(window).on('message', function (event) {
+    var originalEvent = event.originalEvent;
+
+    // 보안상 origin 확인 추천
+    const allowedOrigin = 'http://localhost:28080';
+
+    if (originalEvent.origin !== allowedOrigin) return;
+
+    const data = originalEvent.data;
+
+    if (data && data.type === 'KG_PAYMENT_SUCCESS') {
+        $('#kgPaymentFrame').hide().attr('src', '');
+        alert('결제가 완료되었습니다!');
+        console.log("result :", data.result);
     }
+    else if (data && data.type === 'KG_PAYMENT_CLOSED') {
+         $('#kgPaymentFrame').hide().attr('src', '');
+         alert('사용자가 결제를 취소했습니다.');
+    }
+  });
   </script>
 </head>
 <body>
@@ -95,6 +154,15 @@
   </div>
   <div>
     <a href="#" class="btn_blue" onClick="kgPgCashStart();">결제창 호출</a>
+  </div>
+  <div>
+    <a href="#" class="btn_blue" onClick="kgPgPurchase();">수동 매입</a>
+  </div>
+  <div>
+    <a href="#" class="btn_blue" onClick="kgPgCancel();">취소 요청</a>
+  </div>
+  <div>
+    <a href="#" class="btn_blue" onClick="kgPgRefund();">환불 요청</a>
   </div>
   <iframe id="kgPaymentFrame" style="display: none; width: 100%; height: 600px; border: none;">
   </iframe>

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="ko"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+  <meta charset="UTF-8">
+  <title>결제 완료</title>
+  <script th:inline="javascript">
+    let paymentAuth = /*[[ ${paymentAuth} ]]*/;
+    // 부모창에 결제 성공 신호 전송
+    window.parent.postMessage({
+		type: 'KG_PAYMENT_SUCCESS',
+		result : paymentAuth
+	}, 'http://localhost:28080/');
+  </script>
+</head>
+<body>
+
+</body>
+</html>

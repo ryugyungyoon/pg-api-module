@@ -1,9 +1,6 @@
 package com.rc.pgapimodule.controller;
 
-import com.rc.pgapimodule.dto.request.PGApprovalRequest;
-import com.rc.pgapimodule.dto.request.PGCancelRequest;
-import com.rc.pgapimodule.dto.request.PGPaymentCashRequest;
-import com.rc.pgapimodule.dto.request.PGPaymentRequest;
+import com.rc.pgapimodule.dto.request.*;
 import com.rc.pgapimodule.dto.response.*;
 import com.rc.pgapimodule.gateway.PGType;
 import com.rc.pgapimodule.service.OrderPaymentService;
@@ -31,10 +28,19 @@ public class OrderPaymentController {
 	
 	@PostMapping("/request/cash")
 	@Operation(summary = "결제창 호출")
-	public CommonResponse<PGPaymentCashResponse> requestPayment(
+	public CommonResponse<PGPaymentCashResponse> requestPaymentCash(
 			@RequestParam PGType pgType,
 			PGPaymentCashRequest request) {
 		PGPaymentCashResponse result = paymentService.processPaymentCash(pgType, request);
+		return CommonResponse.ok(result);
+	}
+
+	@PostMapping("/purchase")
+	@Operation(summary = "수동매입 호출")
+	public CommonResponse<PGPaymentPurchaseResponse>paymentPurchase(
+			@RequestParam PGType pgType,
+			PGPaymentPurchaseRequest request) {
+		PGPaymentPurchaseResponse result = paymentService.processPaymentPurchase(pgType, request);
 		return CommonResponse.ok(result);
 	}
 
@@ -54,7 +60,8 @@ public class OrderPaymentController {
 
 	@PostMapping("/cancel")
 	@Operation(summary = "결제 취소")
-	public CommonResponse<PGCancelResponse> cancel(@RequestParam PGType pgType, @RequestBody PGCancelRequest req) {
+	public CommonResponse<PGCancelResponse> cancel(@RequestParam PGType pgType, PGCancelRequest req) {
 		return CommonResponse.ok(paymentService.cancel(pgType, req));
 	}
+
 }

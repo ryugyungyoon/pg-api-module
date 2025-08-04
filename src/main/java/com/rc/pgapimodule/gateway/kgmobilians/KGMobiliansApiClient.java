@@ -7,10 +7,7 @@ import com.rc.pgapimodule.core.base.ConstantCode;
 import com.rc.pgapimodule.core.config.WebClientConfig;
 import com.rc.pgapimodule.core.exception.BusinessException;
 import com.rc.pgapimodule.core.exception.ExceptionCode;
-import com.rc.pgapimodule.dto.request.PGApprovalRequest;
-import com.rc.pgapimodule.dto.request.PGCancelRequest;
-import com.rc.pgapimodule.dto.request.PGPaymentCashRequest;
-import com.rc.pgapimodule.dto.request.PGPaymentRequest;
+import com.rc.pgapimodule.dto.request.*;
 import com.rc.pgapimodule.dto.response.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -134,6 +131,52 @@ public class KGMobiliansApiClient {
 		}
 	}
 
+	public PGPaymentPurchaseResponse callPaymentPurchaseApi(PGPaymentPurchaseRequest reqDTO) throws JsonProcessingException {
+		//Logging
+		KgPGTransLogger.info("#{}::RECV[TOBIS->KG:{}]::{}"
+				, "KG-mobilians"
+				, reqDTO);
+		log.info("##### PGPaymentPurchaseRequest : {}", reqDTO);
+
+		// API 호출
+		String result = null;
+		try {
+			WebClient wc = kgWebClient
+					.mutate()
+					.build();
+
+			result = wc.post()
+				.uri("/MUP/api/purchase")
+				.contentType(MediaType.APPLICATION_JSON)
+				.body(Mono.just(reqDTO), PGPaymentPurchaseRequest.class)
+				.retrieve()
+				.bodyToMono(String.class)
+				.timeout(Duration.ofSeconds(timeout))
+				.block();
+		}
+		catch (WebClientRequestException e) {
+			throw new BusinessException("KG Mobilians 서버 연결 오류 .", ExceptionCode.EXCEPTION_SERVER_CONNECT);
+		}
+		finally {
+			log.info("##### PGPaymentPurchaseResponse : {}", result);
+		}
+
+		// return VO
+		try {
+			//Logging
+			KgPGTransLogger.info("#{}::RECV[TOBIS->KG:{}]::PGPaymentPurchaseResponse({})"
+					, ConstantCode.PAYMENTGATEWAY_CD_KG
+					, CommonUtils.nvl(result, "").toString()
+							.replace("{", "")
+							.replace("}", "")
+							.replace("\"", ""));
+			return objectMapper.readValue(result, PGPaymentPurchaseResponse.class);
+		}
+		catch (JSONException e) {
+			throw new BusinessException("가입설계동의 URL 정보 변환 오류.", ExceptionCode.EXCEPTION_PROC_TRANS_DATA);
+		}
+	}
+
 	public PGApprovalResponse callApprovalApi(PGApprovalRequest req) {
 		// 간략화된 예제
 		return new PGApprovalResponse(true, "2025-07-15T12:00:00", "성공");
@@ -143,7 +186,49 @@ public class KGMobiliansApiClient {
 		return new PGStatusResponse(txId, "APPROVED", "10000");
 	}
 
-	public PGCancelResponse callCancelApi(PGCancelRequest req) {
-		return new PGCancelResponse(true, "2025-07-15T12:30:00", "취소 완료");
+	public PGCancelResponse callCancelApi(PGCancelRequest reqDTO) throws JsonProcessingException {
+		//Logging
+		KgPGTransLogger.info("#{}::RECV[TOBIS->KG:{}]::{}"
+				, "KG-mobilians"
+				, reqDTO);
+		log.info("##### PGCancelRequest : {}", reqDTO);
+
+		// API 호출
+		String result = null;
+		try {
+			WebClient wc = kgWebClient
+					.mutate()
+					.build();
+
+			result = wc.post()
+				.uri("/MUP/api/cancel")
+				.contentType(MediaType.APPLICATION_JSON)
+				.body(Mono.just(reqDTO), PGCancelRequest.class)
+				.retrieve()
+				.bodyToMono(String.class)
+				.timeout(Duration.ofSeconds(timeout))
+				.block();
+		}
+		catch (WebClientRequestException e) {
+			throw new BusinessException("KG Mobilians 서버 연결 오류 .", ExceptionCode.EXCEPTION_SERVER_CONNECT);
+		}
+		finally {
+			log.info("##### PGCancelResponse : {}", result);
+		}
+
+		// return VO
+		try {
+			//Logging
+			KgPGTransLogger.info("#{}::RECV[TOBIS->KG:{}]::PGCancelResponse({})"
+					, ConstantCode.PAYMENTGATEWAY_CD_KG
+					, CommonUtils.nvl(result, "").toString()
+							.replace("{", "")
+							.replace("}", "")
+							.replace("\"", ""));
+			return objectMapper.readValue(result, PGCancelResponse.class);
+		}
+		catch (JSONException e) {
+			throw new BusinessException("가입설계동의 URL 정보 변환 오류.", ExceptionCode.EXCEPTION_PROC_TRANS_DATA);
+		}
 	}
 }
